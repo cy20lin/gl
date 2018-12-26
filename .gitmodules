@@ -1,0 +1,7 @@
+[submodule "submodule/sweet"]
+    path = submodule/sweet
+    url = https://github.com/cy20lin/sweet
+
+[submodule "submodule/imgui"]
+    path = submodule/imgui
+    url = https://github.com/Flix01/imgui
