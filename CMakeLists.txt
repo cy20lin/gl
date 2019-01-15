@@ -19,6 +19,8 @@ set(CMAKE_CXX_STANDARD            14)
 set(CMAKE_CXX_STANDARD_REQUIRED   ON)
 
 include_directories("${CMAKE_CURRENT_LIST_DIR}/include")
+include_directories("${CMAKE_CURRENT_LIST_DIR}/submodule/glm/")
+include_directories("${CMAKE_CURRENT_LIST_DIR}/submodule/stb/")
 
 set(Boost_USE_STATIC_LIBS        ON) # only find static libs
 set(Boost_COMPONENTS
@@ -30,7 +32,7 @@ set(Boost_COMPONENTS
   # date_time
   # exception
   # fiber
-  filesystem
+  # filesystem
   # iostreams
   # locale
   # random
@@ -55,7 +57,7 @@ set(packages
   glbinding
   glfw3
   )
-foreach(component ${Boost_COMPONENTS} boost)
+foreach(component ${Boost_COMPONENTS} Boost)
   if(TARGET Boost::${component})
     sweet_config_add(Boost LIBRARIES PRIVATE Boost::${component})
   endif()
@@ -96,21 +98,21 @@ foreach(package ${packages})
 endforeach()
 
 add_executable(a spike/glbinding-example.cpp)
-sweet_target_add(a CONFIGS boost)
+sweet_target_add(a CONFIGS Boost)
 sweet_target_add(a CONFIGS fmt)
 sweet_target_add(a CONFIGS OpenCV)
 sweet_target_add(a CONFIGS glbinding)
 sweet_target_add(a CONFIGS glfw3)
 
 add_executable(b spike/glbinding-example.cpp)
-sweet_target_add(b CONFIGS boost)
+sweet_target_add(b CONFIGS Boost)
 sweet_target_add(b CONFIGS fmt)
 sweet_target_add(b CONFIGS OpenCV)
 sweet_target_add(b CONFIGS glbinding)
 sweet_target_add(b CONFIGS glfw3)
 
 add_executable(imgui spike/imgui.cpp)
-sweet_target_add(imgui CONFIGS boost)
+sweet_target_add(imgui CONFIGS Boost)
 sweet_target_add(imgui CONFIGS fmt)
 sweet_target_add(imgui CONFIGS OpenCV)
 sweet_target_add(imgui CONFIGS glbinding)
@@ -119,7 +121,7 @@ sweet_target_add(imgui CONFIGS imgui)
 # sweet_target_add(imgui CONFIGS imgui_impl)
 
 add_executable(tut1 src/tut1.cpp)
-sweet_target_add(tut1 CONFIGS boost)
+sweet_target_add(tut1 CONFIGS Boost)
 sweet_target_add(tut1 CONFIGS fmt)
 sweet_target_add(tut1 CONFIGS OpenCV)
 sweet_target_add(tut1 CONFIGS glbinding)
@@ -127,8 +129,85 @@ sweet_target_add(tut1 CONFIGS glfw3)
 # sweet_target_add(tut1 CONFIGS imgui)
 
 add_executable(tut2 src/tut2.cpp)
-sweet_target_add(tut2 CONFIGS boost)
+sweet_target_add(tut2 CONFIGS Boost)
 sweet_target_add(tut2 CONFIGS fmt)
 sweet_target_add(tut2 CONFIGS OpenCV)
 sweet_target_add(tut2 CONFIGS glbinding)
 sweet_target_add(tut2 CONFIGS glfw3)
+
+add_library(1.3.shader src/1.3.shader.cpp)
+sweet_target_add(1.3.shader CONFIGS glbinding)
+sweet_target_add(1.3.shader CONFIGS glfw3)
+
+set(executables
+  1.1.hello_window
+  1.2.hello_triangle
+  1.2.hello_rectangle
+  1.2.hello_polygon
+  1.3.red_triangle
+  1.3.breath_triangle
+  1.3.mix_color_triangle
+  1.3.our_own_shader_class
+  1.4.texture
+  1.4.texture2
+  1.5.transformation
+  1.6.coordinate_system
+  1.6.coordinate_system2
+  1.6.coordinate_system3
+  sensor_emitter_server
+  )
+
+foreach(exe IN LISTS executables)
+  add_executable(${exe} src/${exe}.cpp)
+  sweet_target_add(${exe} CONFIGS Boost)
+  sweet_target_add(${exe} CONFIGS fmt)
+  sweet_target_add(${exe} CONFIGS OpenCV)
+  sweet_target_add(${exe} CONFIGS glbinding)
+  sweet_target_add(${exe} CONFIGS glfw3)
+endforeach()
+# target_link_directories(  sensor_emitter_server PRIVATE /home/cy20lin/pj/cpp_module/module/boost/install/lib )
+message(${Boost_LIBRARIES})
+target_link_libraries(  sensor_emitter_server PRIVATE ${Boost_LIBRARIES})
+  # /home/cy20lin/pj/cpp_module/module/boost/install/lib/libboost_system.so
+  # libboost_system
+  # )
+
+sweet_target_add(1.3.our_own_shader_class LIBRARIES PRIVATE 1.3.shader)
+configure_file(src/1.3.our_own_shader_class-vertex_shader.glsl
+  1.3.our_own_shader_class-vertex_shader.glsl
+  COPYONLY
+  )
+configure_file(src/1.3.our_own_shader_class-fragment_shader.glsl
+  1.3.our_own_shader_class-fragment_shader.glsl
+  COPYONLY
+  )
+
+sweet_target_add(1.4.texture LIBRARIES PRIVATE 1.3.shader)
+configure_file(src/1.4.texture-vertex.glsl 1.4.texture-vertex.glsl COPYONLY)
+configure_file(src/1.4.texture-fragment.glsl 1.4.texture-fragment.glsl COPYONLY)
+configure_file(resource/wall.jpg wall.jpg COPYONLY)
+configure_file(resource/awesomeface.png awesomeface.png COPYONLY)
+configure_file(resource/container.jpg container.jpg COPYONLY)
+configure_file(resource/grass_side.png grass_side.png COPYONLY)
+configure_file(resource/grass_top.png grass_top.png COPYONLY)
+configure_file(resource/grass_path_top.png grass_path_top.png COPYONLY)
+configure_file(resource/dirt.png dirt.png COPYONLY)
+
+sweet_target_add(1.4.texture2 LIBRARIES PRIVATE 1.3.shader)
+configure_file(src/1.4.texture2-vertex.glsl 1.4.texture2-vertex.glsl COPYONLY)
+configure_file(src/1.4.texture2-fragment.glsl 1.4.texture2-fragment.glsl COPYONLY)
+
+sweet_target_add(1.5.transformation LIBRARIES PRIVATE 1.3.shader)
+configure_file(src/1.5.transformation-vertex.glsl 1.5.transformation-vertex.glsl COPYONLY)
+configure_file(src/1.5.transformation-fragment.glsl 1.5.transformation-fragment.glsl COPYONLY)
+
+sweet_target_add(1.6.coordinate_system LIBRARIES PRIVATE 1.3.shader)
+configure_file(src/1.6.coordinate_system-vertex.glsl 1.6.coordinate_system-vertex.glsl COPYONLY)
+configure_file(src/1.6.coordinate_system-fragment.glsl 1.6.coordinate_system-fragment.glsl COPYONLY)
+
+
+sweet_target_add(1.6.coordinate_system2 LIBRARIES PRIVATE 1.3.shader)
+sweet_target_add(1.6.coordinate_system3 LIBRARIES PRIVATE 1.3.shader)
+configure_file(src/1.6.coordinate_system2-vertex.glsl 1.6.coordinate_system2-vertex.glsl COPYONLY)
+configure_file(src/1.6.coordinate_system2-fragment.glsl 1.6.coordinate_system2-fragment.glsl COPYONLY)
+

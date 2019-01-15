@@ -1,7 +1,12 @@
-[submodule "submodule/sweet"]
-    path = submodule/sweet
-    url = https://github.com/cy20lin/sweet
-
+[submodule "submodule/glm"]
+    url = https://github.com/g-truc/glm
+    path = submodule/glm
 [submodule "submodule/imgui"]
-    path = submodule/imgui
     url = https://github.com/Flix01/imgui
+    path = submodule/imgui
+[submodule "submodule/stb"]
+    url = https://github.com/nothings/stb
+    path = submodule/stb
+[submodule "submodule/sweet"]
+    url = https://github.com/cy20lin/sweet
+    path = submodule/sweet

@@ -1,5 +1,4 @@
 build/*
-
 .cquery_cached_index
-
 .cquery
+tmp/

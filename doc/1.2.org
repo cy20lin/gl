@@ -1,0 +1,19 @@
+#+TITLE: Hello Triangle
+
+* Concepts
+** Vertex Array Object (VAO)
+
+** Vertex Buffer Objects (VBO)
+   The VBO represent object stored in GPU's memory.
+   In order to utilize GPU's processing power,
+   we have to send data to gpu.
+   
+ #+BEGIN_SRC c++
+   int VBOs[5];
+   glBindBuffers(5, VBO); 
+ #+END_SRC
+ 
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
+glBufferData(GL_ARRAY_BUFFER, sizeof(vertics), vertics, GL_STATIC_DRAW);
+
+** Element Buffer Object (EBO)

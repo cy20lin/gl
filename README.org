@@ -1,4 +1,4 @@
-#+TITLE: Learn OpenGL things
+#+TITLE: Learn OpenGL
 
 This is the project I created to learn how to use OpenGL
 
@@ -12,6 +12,6 @@ These are good reference and tutorial to follow.
 - [[http://glew.sourceforge.net/][GLEW]]
 - [[https://learnopengl.com/][Learn OpenGL]]
 - [[http://www.opengl-tutorial.org/][OpenGL Tutorial]]
-
+- [[https://open.gl/][open.gl]]
 
 * 

@@ -1,0 +1,5 @@
+* 1.6.coordinate_system3
+
+  A demo showing the orientation of the current device.
+  The sensor data is from windows phone sensor emitter application.
+
