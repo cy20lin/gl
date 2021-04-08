@@ -6,10 +6,10 @@ This is the project I created to learn how to use OpenGL
 
 These are good references and tutorials to follow.
 
-- [https://learnopengl.com/](Learn OpenGL)
-- [https://www.glfw.org](GLFW official website)
-- [https://glbinding.org/](Glbinding official website)
-- [http://glew.sourceforge.net/](GLEW)
-- [[http://www.opengl-tutorial.org/](OpenGL Tutorial)
-- [https://open.gl/](open.gl)
+- [Learn OpenGL](https://learnopengl.com/)
+- [GLFW official website](https://www.glfw.org)
+- [Glbinding official website](https://glbinding.org/)
+- [GLEW](http://glew.sourceforge.net/)
+- [OpenGL Tutorial](http://www.opengl-tutorial.org/)
+- [open.gl](https://open.gl/)
 
