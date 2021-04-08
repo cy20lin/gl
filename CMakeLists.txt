@@ -53,91 +53,91 @@ set(packages
   Boost
   fmt
   OpenCV
-  date
+  #date
   glbinding
   glfw3
   )
 foreach(component ${Boost_COMPONENTS} Boost)
   if(TARGET Boost::${component})
-    sweet_config_add(Boost LIBRARIES PRIVATE Boost::${component})
+    sweet_config(Boost ADD LIBRARIES PRIVATE Boost::${component})
   endif()
 endforeach()
 
 if(WIN32)
   # boost.asio dependency
-  sweet_config_add(Boost LIBRARIES PRIVATE wsock32 ws2_32)
+  sweet_config(Boost ADD LIBRARIES PRIVATE wsock32 ws2_32)
 endif()
 
-sweet_config_add(imgui INCLUDES PRIVATE
+sweet_config(imgui ADD INCLUDES PRIVATE
   ./submodule
   ./submodule/imgui
   )
-sweet_config_add(imgui SOURCES PRIVATE
+sweet_config(imgui ADD SOURCES PRIVATE
   ./submodule/imgui/imgui.cpp
   ./submodule/imgui/imgui_demo.cpp
   ./submodule/imgui/imgui_draw.cpp
   ./submodule/imgui/imgui_widgets.cpp
   )
 
-sweet_config_add(imgui_impl SOURCES PRIVATE
+sweet_config(imgui_impl ADD SOURCES PRIVATE
   ./submodule/imgui/examples/imgui_impl_opengl3.cpp
   ./submodule/imgui/examples/imgui_impl_glfw.cpp
   )
 
-sweet_config_add(fmt LIBRARIES PRIVATE fmt)
-sweet_config_add(date LIBRARIES PRIVATE date_interface)
-sweet_config_add(glbinding LIBRARIES PRIVATE glbinding::glbinding glbinding::glbinding-aux)
-sweet_config_add(glfw3 LIBRARIES PRIVATE glfw)
+sweet_config(fmt ADD LIBRARIES PRIVATE fmt)
+# sweet_config(date ADD LIBRARIES PRIVATE date_interface)
+sweet_config(glbinding ADD LIBRARIES PRIVATE glbinding::glbinding glbinding::glbinding-aux)
+sweet_config(glfw3 ADD LIBRARIES PRIVATE glfw)
 
 show_variables(glbinding_FOUND)
 show_variables(glfw3_FOUND)
-show_variables(date_FOUND)
+# show_variables(date_FOUND)
 foreach(package ${packages})
   config_from_generic_package("${package}" "${package}")
   message(STATUS " config: ${package}=${${package}_CONFIG_SETTINGS}")
 endforeach()
 
 add_executable(a spike/glbinding-example.cpp)
-sweet_target_add(a CONFIGS Boost)
-sweet_target_add(a CONFIGS fmt)
-sweet_target_add(a CONFIGS OpenCV)
-sweet_target_add(a CONFIGS glbinding)
-sweet_target_add(a CONFIGS glfw3)
+sweet_target(a ADD CONFIGS Boost)
+sweet_target(a ADD CONFIGS fmt)
+sweet_target(a ADD CONFIGS OpenCV)
+sweet_target(a ADD CONFIGS glbinding)
+sweet_target(a ADD CONFIGS glfw3)
 
 add_executable(b spike/glbinding-example.cpp)
-sweet_target_add(b CONFIGS Boost)
-sweet_target_add(b CONFIGS fmt)
-sweet_target_add(b CONFIGS OpenCV)
-sweet_target_add(b CONFIGS glbinding)
-sweet_target_add(b CONFIGS glfw3)
+sweet_target(b ADD CONFIGS Boost)
+sweet_target(b ADD CONFIGS fmt)
+sweet_target(b ADD CONFIGS OpenCV)
+sweet_target(b ADD CONFIGS glbinding)
+sweet_target(b ADD CONFIGS glfw3)
 
 add_executable(imgui spike/imgui.cpp)
-sweet_target_add(imgui CONFIGS Boost)
-sweet_target_add(imgui CONFIGS fmt)
-sweet_target_add(imgui CONFIGS OpenCV)
-sweet_target_add(imgui CONFIGS glbinding)
-sweet_target_add(imgui CONFIGS glfw3)
-sweet_target_add(imgui CONFIGS imgui)
-# sweet_target_add(imgui CONFIGS imgui_impl)
+sweet_target(imgui ADD CONFIGS Boost)
+sweet_target(imgui ADD CONFIGS fmt)
+sweet_target(imgui ADD CONFIGS OpenCV)
+sweet_target(imgui ADD CONFIGS glbinding)
+sweet_target(imgui ADD CONFIGS glfw3)
+sweet_target(imgui ADD CONFIGS imgui)
+# sweet_target(imgui ADD CONFIGS imgui_impl)
 
 add_executable(tut1 src/tut1.cpp)
-sweet_target_add(tut1 CONFIGS Boost)
-sweet_target_add(tut1 CONFIGS fmt)
-sweet_target_add(tut1 CONFIGS OpenCV)
-sweet_target_add(tut1 CONFIGS glbinding)
-sweet_target_add(tut1 CONFIGS glfw3)
-# sweet_target_add(tut1 CONFIGS imgui)
+sweet_target(tut1 ADD CONFIGS Boost)
+sweet_target(tut1 ADD CONFIGS fmt)
+sweet_target(tut1 ADD CONFIGS OpenCV)
+sweet_target(tut1 ADD CONFIGS glbinding)
+sweet_target(tut1 ADD CONFIGS glfw3)
+# sweet_target(tut1 ADD CONFIGS imgui)
 
 add_executable(tut2 src/tut2.cpp)
-sweet_target_add(tut2 CONFIGS Boost)
-sweet_target_add(tut2 CONFIGS fmt)
-sweet_target_add(tut2 CONFIGS OpenCV)
-sweet_target_add(tut2 CONFIGS glbinding)
-sweet_target_add(tut2 CONFIGS glfw3)
+sweet_target(tut2 ADD CONFIGS Boost)
+sweet_target(tut2 ADD CONFIGS fmt)
+sweet_target(tut2 ADD CONFIGS OpenCV)
+sweet_target(tut2 ADD CONFIGS glbinding)
+sweet_target(tut2 ADD CONFIGS glfw3)
 
 add_library(1.3.shader src/1.3.shader.cpp)
-sweet_target_add(1.3.shader CONFIGS glbinding)
-sweet_target_add(1.3.shader CONFIGS glfw3)
+sweet_target(1.3.shader ADD CONFIGS glbinding)
+sweet_target(1.3.shader ADD CONFIGS glfw3)
 
 set(executables
   1.1.hello_window
@@ -159,11 +159,11 @@ set(executables
 
 foreach(exe IN LISTS executables)
   add_executable(${exe} src/${exe}.cpp)
-  sweet_target_add(${exe} CONFIGS Boost)
-  sweet_target_add(${exe} CONFIGS fmt)
-  sweet_target_add(${exe} CONFIGS OpenCV)
-  sweet_target_add(${exe} CONFIGS glbinding)
-  sweet_target_add(${exe} CONFIGS glfw3)
+  sweet_target(${exe} ADD CONFIGS Boost)
+  sweet_target(${exe} ADD CONFIGS fmt)
+  sweet_target(${exe} ADD CONFIGS OpenCV)
+  sweet_target(${exe} ADD CONFIGS glbinding)
+  sweet_target(${exe} ADD CONFIGS glfw3)
 endforeach()
 # target_link_directories(  sensor_emitter_server PRIVATE /home/cy20lin/pj/cpp_module/module/boost/install/lib )
 message(${Boost_LIBRARIES})
@@ -172,7 +172,7 @@ target_link_libraries(  sensor_emitter_server PRIVATE ${Boost_LIBRARIES})
   # libboost_system
   # )
 
-sweet_target_add(1.3.our_own_shader_class LIBRARIES PRIVATE 1.3.shader)
+sweet_target(1.3.our_own_shader_class ADD LIBRARIES PRIVATE 1.3.shader)
 configure_file(src/1.3.our_own_shader_class-vertex_shader.glsl
   1.3.our_own_shader_class-vertex_shader.glsl
   COPYONLY
@@ -182,7 +182,7 @@ configure_file(src/1.3.our_own_shader_class-fragment_shader.glsl
   COPYONLY
   )
 
-sweet_target_add(1.4.texture LIBRARIES PRIVATE 1.3.shader)
+sweet_target(1.4.texture ADD LIBRARIES PRIVATE 1.3.shader)
 configure_file(src/1.4.texture-vertex.glsl 1.4.texture-vertex.glsl COPYONLY)
 configure_file(src/1.4.texture-fragment.glsl 1.4.texture-fragment.glsl COPYONLY)
 configure_file(resource/wall.jpg wall.jpg COPYONLY)
@@ -193,21 +193,21 @@ configure_file(resource/grass_top.png grass_top.png COPYONLY)
 configure_file(resource/grass_path_top.png grass_path_top.png COPYONLY)
 configure_file(resource/dirt.png dirt.png COPYONLY)
 
-sweet_target_add(1.4.texture2 LIBRARIES PRIVATE 1.3.shader)
+sweet_target(1.4.texture2 ADD LIBRARIES PRIVATE 1.3.shader)
 configure_file(src/1.4.texture2-vertex.glsl 1.4.texture2-vertex.glsl COPYONLY)
 configure_file(src/1.4.texture2-fragment.glsl 1.4.texture2-fragment.glsl COPYONLY)
 
-sweet_target_add(1.5.transformation LIBRARIES PRIVATE 1.3.shader)
+sweet_target(1.5.transformation ADD LIBRARIES PRIVATE 1.3.shader)
 configure_file(src/1.5.transformation-vertex.glsl 1.5.transformation-vertex.glsl COPYONLY)
 configure_file(src/1.5.transformation-fragment.glsl 1.5.transformation-fragment.glsl COPYONLY)
 
-sweet_target_add(1.6.coordinate_system LIBRARIES PRIVATE 1.3.shader)
+sweet_target(1.6.coordinate_system ADD LIBRARIES PRIVATE 1.3.shader)
 configure_file(src/1.6.coordinate_system-vertex.glsl 1.6.coordinate_system-vertex.glsl COPYONLY)
 configure_file(src/1.6.coordinate_system-fragment.glsl 1.6.coordinate_system-fragment.glsl COPYONLY)
 
 
-sweet_target_add(1.6.coordinate_system2 LIBRARIES PRIVATE 1.3.shader)
-sweet_target_add(1.6.coordinate_system3 LIBRARIES PRIVATE 1.3.shader)
+sweet_target(1.6.coordinate_system2 ADD LIBRARIES PRIVATE 1.3.shader)
+sweet_target(1.6.coordinate_system3 ADD LIBRARIES PRIVATE 1.3.shader)
 configure_file(src/1.6.coordinate_system2-vertex.glsl 1.6.coordinate_system2-vertex.glsl COPYONLY)
 configure_file(src/1.6.coordinate_system2-fragment.glsl 1.6.coordinate_system2-fragment.glsl COPYONLY)
 
